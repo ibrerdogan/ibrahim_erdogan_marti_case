@@ -7,14 +7,16 @@
 
 import UIKit
 import MapKit
+import Combine
 final class MainMapViewController: UIViewController {
     var viewModel: MainMapViewModel
-    
+    private var anyCancellable = Set<AnyCancellable>()
     
     private lazy var mainMap: MKMapView = {
        let mapView = MKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
         mapView.showsUserLocation = true
+        mapView.userTrackingMode = .follow
         return mapView
     }()
     
@@ -30,12 +32,29 @@ final class MainMapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         addComponents()
+        observeCurrentLocation()
     }
-    
     
     override func viewWillLayoutSubviews() {
         super.viewWillLayoutSubviews()
         configureLayout()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        viewModel.requestAuthorization()
+    }
+    
+    private func observeCurrentLocation() {
+        viewModel.$currentLocation.sink { [weak self] location in
+            guard let strongSelf = self, let location = location else {return}
+            let region = MKCoordinateRegion(
+                center: location.coordinate,
+                latitudinalMeters: 500,
+                longitudinalMeters: 500
+            )
+            strongSelf.mainMap.setRegion(region, animated: true)
+        }.store(in: &anyCancellable)
     }
     
     private func addComponents() {

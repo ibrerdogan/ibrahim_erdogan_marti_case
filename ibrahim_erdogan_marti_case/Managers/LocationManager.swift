@@ -24,7 +24,9 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     func requestAuthorization() {
-        locationManager.requestAlwaysAuthorization()
+        if locationManager.authorizationStatus != .authorizedWhenInUse || locationManager.authorizationStatus != .authorizedAlways {
+            locationManager.requestAlwaysAuthorization()
+        }
     }
 
     func startTracking() {

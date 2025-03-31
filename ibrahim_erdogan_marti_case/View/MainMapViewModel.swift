@@ -10,11 +10,13 @@ import CoreLocation
 final class MainMapViewModel {
     @Published var currentLocation: CLLocation?
     @Published var currentAuthStatus: CLAuthorizationStatus?
+    @Published var newPinLocation: CLLocation?
     private var locationManager: LocationManager
     
     init(locationManager: LocationManager) {
         self.locationManager = locationManager
         observeAuthStatus()
+        observeShouldAddNewPin()
     }
     
     func observeAuthStatus() {
@@ -24,8 +26,19 @@ final class MainMapViewModel {
         }
     }
     
+    func observeShouldAddNewPin() {
+        locationManager.shouldAddPin = {[weak self] pinLocation in
+            guard let strongSelf = self else {return}
+            strongSelf.newPinLocation = pinLocation
+        }
+    }
+    
     func requestAuthorization(){
         locationManager.requestAuthorization()
+    }
+    
+    func startTracking() {
+        locationManager.startTracking()
     }
 
 }

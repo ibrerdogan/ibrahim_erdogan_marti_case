@@ -9,10 +9,23 @@ import Foundation
 import CoreLocation
 final class MainMapViewModel {
     @Published var currentLocation: CLLocation?
-    var locationManager: LocationManager
+    @Published var currentAuthStatus: CLAuthorizationStatus?
+    private var locationManager: LocationManager
     
     init(locationManager: LocationManager) {
         self.locationManager = locationManager
+        observeAuthStatus()
+    }
+    
+    func observeAuthStatus() {
+        locationManager.didupdateLocationAuthStatus = { [weak self] status in
+            guard let strongSelf = self else {return}
+            strongSelf.currentAuthStatus = status
+        }
+    }
+    
+    func requestAuthorization(){
+        locationManager.requestAuthorization()
     }
 
 }

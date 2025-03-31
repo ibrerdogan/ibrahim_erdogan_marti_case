@@ -6,6 +6,13 @@
 //
 
 import Foundation
+import CoreLocation
 final class MainMapViewModel {
+    @Published var currentLocation: CLLocation?
+    var locationManager: LocationManager
     
+    init(locationManager: LocationManager) {
+        self.locationManager = locationManager
+    }
+
 }

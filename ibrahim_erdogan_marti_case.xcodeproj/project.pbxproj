@@ -13,6 +13,7 @@
 		7F9D225A2D9B0A1E00784095 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D22592D9B0A1E00784095 /* Assets.xcassets */; };
 		7F9D226A2D9B15B900784095 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22692D9B15B900784095 /* LocationManager.swift */; };
 		7F9D22722D9B1B5F00784095 /* MainMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22712D9B1B5F00784095 /* MainMapViewModel.swift */; };
+		7F9D22742D9B1BCF00784095 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22732D9B1BCF00784095 /* MainMapViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		7F9D225E2D9B0A1E00784095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7F9D22692D9B15B900784095 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		7F9D22712D9B1B5F00784095 /* MainMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMapViewModel.swift; path = ibrahim_erdogan_marti_case/View/MainMapViewModel.swift; sourceTree = SOURCE_ROOT; };
+		7F9D22732D9B1BCF00784095 /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				7F9D22512D9B0A1D00784095 /* ViewController.swift */,
+				7F9D22732D9B1BCF00784095 /* MainMapViewController.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7F9D22742D9B1BCF00784095 /* MainMapViewController.swift in Sources */,
 				7F9D226A2D9B15B900784095 /* LocationManager.swift in Sources */,
 				7F9D22522D9B0A1D00784095 /* ViewController.swift in Sources */,
 				7F9D22582D9B0A1D00784095 /* ibrahim_erdogan_marti_case.xcdatamodeld in Sources */,

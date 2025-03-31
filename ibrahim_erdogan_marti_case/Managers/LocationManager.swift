@@ -12,13 +12,15 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     
     var didUpdateLocation : (Result<CLLocation,Error>) -> () = { _ in}
     var didupdateLocationAuthStatus: (CLAuthorizationStatus) -> () = { _ in}
+    var shouldAddPin: (CLLocation) -> () = { _ in}
     private let locationManager = CLLocationManager()
+    private var lastPinLocation: CLLocation?
 
     override init() {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.distanceFilter = 100 // 100 metre
+        locationManager.distanceFilter = 10
         locationManager.allowsBackgroundLocationUpdates = true
         locationManager.pausesLocationUpdatesAutomatically = false
     }
@@ -40,6 +42,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         didUpdateLocation(Result.success(location))
+        shouldAddNewPin(location)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -48,5 +51,21 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         didupdateLocationAuthStatus(manager.authorizationStatus)
+    }
+    
+    private func shouldAddNewPin(_ location: CLLocation) {
+        guard let lastPin = lastPinLocation else {
+            shouldAddPin(location)
+            lastPinLocation = location
+            return
+        }
+        
+        let distance = lastPin.distance(from: location)
+        if distance >= 100 {
+            shouldAddPin(location)
+            lastPinLocation = location
+        }
+        
+        
     }
 }

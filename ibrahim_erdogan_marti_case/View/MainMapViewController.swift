@@ -33,6 +33,8 @@ final class MainMapViewController: UIViewController {
         super.viewDidLoad()
         addComponents()
         observeCurrentLocation()
+        observeShouldAddNewPin()
+        viewModel.startTracking()
     }
     
     override func viewWillLayoutSubviews() {
@@ -57,6 +59,15 @@ final class MainMapViewController: UIViewController {
         }.store(in: &anyCancellable)
     }
     
+    private func observeShouldAddNewPin() {
+        viewModel.$newPinLocation.sink { [weak self] location in
+            guard let strongSelf = self, let location = location else {return}
+            let annotation = MKPointAnnotation()
+            annotation.coordinate = location.coordinate
+            annotation.title = "📍 Pin"
+            strongSelf.mainMap.addAnnotation(annotation)
+        }.store(in: &anyCancellable)
+    }
     private func addComponents() {
         view.addSubview(mainMap)
     }

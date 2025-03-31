@@ -18,7 +18,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        ) -> Bool {
 
            window = UIWindow(frame: UIScreen.main.bounds)
-           let rootViewController = ViewController() // Kendi ViewController'ını burada kullan
+           let locationManager = LocationManager()
+           let viewModel = MainMapViewModel(locationManager: locationManager)
+           let rootViewController = MainMapViewController(viewModel: viewModel)
            window?.rootViewController = rootViewController
            window?.makeKeyAndVisible()
 

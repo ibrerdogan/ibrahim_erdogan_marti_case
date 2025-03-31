@@ -52,13 +52,45 @@
 		7F9D224C2D9B0A1D00784095 /* ibrahim_erdogan_marti_case */ = {
 			isa = PBXGroup;
 			children = (
-				7F9D224D2D9B0A1D00784095 /* AppDelegate.swift */,
-				7F9D22512D9B0A1D00784095 /* ViewController.swift */,
+				7F9D22672D9B125400784095 /* AppDelegate */,
+				7F9D22662D9B121A00784095 /* Model */,
+				7F9D22652D9B121300784095 /* ViewModel */,
+				7F9D22642D9B120700784095 /* View */,
 				7F9D22592D9B0A1E00784095 /* Assets.xcassets */,
 				7F9D225E2D9B0A1E00784095 /* Info.plist */,
 				7F9D22562D9B0A1D00784095 /* ibrahim_erdogan_marti_case.xcdatamodeld */,
 			);
 			path = ibrahim_erdogan_marti_case;
+			sourceTree = "<group>";
+		};
+		7F9D22642D9B120700784095 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7F9D22512D9B0A1D00784095 /* ViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		7F9D22652D9B121300784095 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		7F9D22662D9B121A00784095 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7F9D22672D9B125400784095 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				7F9D224D2D9B0A1D00784095 /* AppDelegate.swift */,
+			);
+			path = AppDelegate;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -8,7 +8,7 @@
 import UIKit
 import MapKit
 import Combine
-final class MainMapViewController: UIViewController {
+final class MainMapViewController: UIViewController,MKMapViewDelegate {
     var viewModel: MainMapViewModel
     private var anyCancellable = Set<AnyCancellable>()
     
@@ -23,6 +23,7 @@ final class MainMapViewController: UIViewController {
     init(viewModel: MainMapViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
+        mainMap.delegate = self
     }
     
     required init?(coder: NSCoder) {
@@ -64,7 +65,6 @@ final class MainMapViewController: UIViewController {
             guard let strongSelf = self, let location = location else {return}
             let annotation = MKPointAnnotation()
             annotation.coordinate = location.coordinate
-            annotation.title = "📍 Pin"
             strongSelf.mainMap.addAnnotation(annotation)
         }.store(in: &anyCancellable)
     }
@@ -79,5 +79,34 @@ final class MainMapViewController: UIViewController {
             mainMap.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             mainMap.bottomAnchor.constraint(equalTo: view.bottomAnchor)
         ])
+    }
+    
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
+        let identifier = "CustomPin"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+        
+        if annotationView == nil {
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            annotationView?.canShowCallout = false
+            annotationView?.markerTintColor = .systemBlue
+        } else {
+            annotationView?.annotation = annotation
+        }
+        
+        return annotationView
+    }
+    
+    func mapView(_ mapView: MKMapView, didSelect annotationView: MKAnnotationView) {
+        if let annotation = annotationView.annotation as? MKPointAnnotation {
+            if annotation.subtitle == nil {
+                annotation.subtitle = "Başlık"
+            } else {
+                annotation.subtitle = nil
+            }
+        }
     }
 }

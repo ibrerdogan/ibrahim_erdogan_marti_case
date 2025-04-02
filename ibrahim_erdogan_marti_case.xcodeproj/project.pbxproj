@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		7F9D224E2D9B0A1D00784095 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D224D2D9B0A1D00784095 /* AppDelegate.swift */; };
-		7F9D22522D9B0A1D00784095 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22512D9B0A1D00784095 /* ViewController.swift */; };
 		7F9D22582D9B0A1D00784095 /* ibrahim_erdogan_marti_case.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22562D9B0A1D00784095 /* ibrahim_erdogan_marti_case.xcdatamodeld */; };
 		7F9D225A2D9B0A1E00784095 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7F9D22592D9B0A1E00784095 /* Assets.xcassets */; };
 		7F9D226A2D9B15B900784095 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22692D9B15B900784095 /* LocationManager.swift */; };
@@ -23,7 +22,6 @@
 /* Begin PBXFileReference section */
 		7F9D224A2D9B0A1D00784095 /* ibrahim_erdogan_marti_case.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ibrahim_erdogan_marti_case.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F9D224D2D9B0A1D00784095 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		7F9D22512D9B0A1D00784095 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		7F9D22572D9B0A1D00784095 /* ibrahim_erdogan_marti_case.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = ibrahim_erdogan_marti_case.xcdatamodel; sourceTree = "<group>"; };
 		7F9D22592D9B0A1E00784095 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		7F9D225E2D9B0A1E00784095 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -82,7 +80,6 @@
 			isa = PBXGroup;
 			children = (
 				7F9D30D42D9DB7B600A22B05 /* CutomButtonView */,
-				7F9D22512D9B0A1D00784095 /* ViewController.swift */,
 				7F9D22732D9B1BCF00784095 /* MainMapViewController.swift */,
 			);
 			path = View;
@@ -202,7 +199,6 @@
 				7F9D22742D9B1BCF00784095 /* MainMapViewController.swift in Sources */,
 				7F9D22782D9C775B00784095 /* CustomLocationModel.swift in Sources */,
 				7F9D226A2D9B15B900784095 /* LocationManager.swift in Sources */,
-				7F9D22522D9B0A1D00784095 /* ViewController.swift in Sources */,
 				7F9D30D62D9DB7CB00A22B05 /* CustomButton.swift in Sources */,
 				7F9D22582D9B0A1D00784095 /* ibrahim_erdogan_marti_case.xcdatamodeld in Sources */,
 				7F9D224E2D9B0A1D00784095 /* AppDelegate.swift in Sources */,

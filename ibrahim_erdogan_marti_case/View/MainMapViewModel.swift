@@ -12,6 +12,7 @@ final class MainMapViewModel {
     @Published var newPinLocation: CustomLocationModel?
     private var locationManager: LocationManager
     private var userDefaultManager: UserDefaultsManager
+    var selectedAnnotation: CustomAnnotation?
     init(locationManager: LocationManager, userDefaultManager: UserDefaultsManager) {
         self.locationManager = locationManager
         self.userDefaultManager = userDefaultManager

@@ -11,7 +11,6 @@ import Combine
 final class MainMapViewController: UIViewController,MKMapViewDelegate {
     var viewModel: MainMapViewModel
     private var anyCancellable = Set<AnyCancellable>()
-    private var selectedAnnotation: CustomAnnotation?
     
     private lazy var startButton: CustomButton = {
        let button = CustomButton(title: "Start Tracking",
@@ -129,10 +128,10 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     func mapView(_ mapView: MKMapView, didSelect annotationView: MKAnnotationView) {
         guard let customAnnotation = annotationView.annotation as? CustomAnnotation else { return }
         
-        if let selected = selectedAnnotation {
+        if let selected = viewModel.selectedAnnotation {
             if selected === customAnnotation {
                 selected.title = nil
-                selectedAnnotation = nil
+                viewModel.selectedAnnotation = nil
                 mapView.deselectAnnotation(customAnnotation, animated: true)
                 return
             } else {
@@ -140,7 +139,7 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
             }
         }
         customAnnotation.title = customAnnotation.locationModel.address
-        selectedAnnotation = customAnnotation
+        viewModel.selectedAnnotation = customAnnotation
     }
     
     @objc

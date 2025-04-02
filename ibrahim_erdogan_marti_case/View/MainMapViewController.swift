@@ -61,7 +61,6 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         addComponents()
-        observeCurrentLocation()
         observeShouldAddNewPin()
     }
     
@@ -76,17 +75,6 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
         viewModel.getSavedPins()
     }
     
-    private func observeCurrentLocation() {
-        viewModel.$currentLocation.sink { [weak self] location in
-            guard let strongSelf = self, let location = location else {return}
-            let region = MKCoordinateRegion(
-                center: location.coordinate,
-                latitudinalMeters: 500,
-                longitudinalMeters: 500
-            )
-            strongSelf.mainMap.setRegion(region, animated: true)
-        }.store(in: &anyCancellable)
-    }
     
     private func observeShouldAddNewPin() {
         viewModel.$newPinLocation.sink { [weak self] location in
@@ -124,21 +112,21 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
-            return nil
-        }
-        
-        let identifier = "CustomPin"
-        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
-        
-        if annotationView == nil {
-            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+                return nil
+            }
+
+            let identifier = "CustomPin"
+            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+            if annotationView == nil {
+                annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+            } else {
+                annotationView?.annotation = annotation
+            }
+
             annotationView?.canShowCallout = false
             annotationView?.markerTintColor = .systemBlue
-        } else {
-            annotationView?.annotation = annotation
-        }
-        
-        return annotationView
+
+            return annotationView
     }
     
     func mapView(_ mapView: MKMapView, didSelect annotationView: MKAnnotationView) {

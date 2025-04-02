@@ -46,6 +46,7 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.requestAuthorization()
+        viewModel.getSavedPins()
     }
     
     private func observeCurrentLocation() {

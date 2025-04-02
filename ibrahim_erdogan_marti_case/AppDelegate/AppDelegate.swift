@@ -19,7 +19,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
            window = UIWindow(frame: UIScreen.main.bounds)
            let locationManager = LocationManager()
-           let viewModel = MainMapViewModel(locationManager: locationManager)
+           let userDefaultManager = UserDefaultsManager()
+           let viewModel = MainMapViewModel(locationManager: locationManager,userDefaultManager: userDefaultManager)
            let rootViewController = MainMapViewController(viewModel: viewModel)
            window?.rootViewController = rootViewController
            window?.makeKeyAndVisible()

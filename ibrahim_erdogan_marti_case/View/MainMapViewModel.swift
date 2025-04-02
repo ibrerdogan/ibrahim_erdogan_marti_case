@@ -50,5 +50,9 @@ final class MainMapViewModel {
     func startTracking() {
         locationManager.startTracking()
     }
+    
+    func stopTracking() {
+        locationManager.stopTracking()
+    }
 
 }

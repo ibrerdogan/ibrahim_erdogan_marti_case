@@ -12,11 +12,16 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     
     var didUpdateLocation : (Result<CLLocation,Error>) -> () = { _ in}
     var didupdateLocationAuthStatus: (CLAuthorizationStatus) -> () = { _ in}
-    var shouldAddPin: (CustomLocationModel) -> () = { _ in}
+    var addNewLocationToMap: (CustomLocationModel) -> () = { _ in}
+    
     private let locationManager = CLLocationManager()
     private var lastPinLocation: CLLocation?
-    private var geocoderManager = GeocoderManager()
-    override init() {
+    private var geocoderManager: GeocoderManager
+    private var distance: Double
+    
+    init(geocoderManager: GeocoderManager, distance: Double) {
+        self.distance = distance
+        self.geocoderManager = geocoderManager
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
@@ -26,7 +31,8 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     }
     
     func requestAuthorization() {
-        if locationManager.authorizationStatus != .authorizedWhenInUse || locationManager.authorizationStatus != .authorizedAlways {
+        let status = locationManager.authorizationStatus
+        if status == .notDetermined {
             locationManager.requestAlwaysAuthorization()
         }
     }
@@ -42,7 +48,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         didUpdateLocation(Result.success(location))
-        shouldAddNewPin(location)
+        handleNewPin(location)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
@@ -53,28 +59,25 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         didupdateLocationAuthStatus(manager.authorizationStatus)
     }
     
-    private func shouldAddNewPin(_ location: CLLocation) {
+    private func handleNewPin(_ location: CLLocation) {
         guard let lastPin = lastPinLocation else {
-            
-            geocoderManager.getAddressForLocation(location) {[weak self] address in
-                guard let strongSelf = self, let address = address else {return}
-                strongSelf.updateAddPin(CustomLocationModel(address: address, location: location))
-            }
+            addPin(for: location)
             return
         }
         
         let distance = lastPin.distance(from: location)
-        if distance >= 100 {
-            geocoderManager.getAddressForLocation(location) {[weak self] address in
-                guard let strongSelf = self, let address = address else {return}
-                strongSelf.updateAddPin(CustomLocationModel(address: address, location: location))
-            }
+        if distance >= self.distance {
+            addPin(for: location)
         }
-        
     }
     
-    private func updateAddPin(_ location: CustomLocationModel) {
-        shouldAddPin(location)
-        lastPinLocation = location.location
+    private func addPin(for location: CLLocation) {
+        geocoderManager.getAddressForLocation(location) { [weak self] address in
+            guard let self = self, let address = address else { return }
+            let locationModel = CustomLocationModel(address: address, location: location)
+            self.addNewLocationToMap(locationModel)
+            self.lastPinLocation = location
+        }
     }
 }
+

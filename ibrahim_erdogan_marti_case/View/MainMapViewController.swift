@@ -11,7 +11,6 @@ import Combine
 final class MainMapViewController: UIViewController,MKMapViewDelegate {
     var viewModel: MainMapViewModel
     private var anyCancellable = Set<AnyCancellable>()
-    private var selectedAnnotation: CustomAnnotation?
     
     private lazy var startButton: CustomButton = {
        let button = CustomButton(title: "Start Tracking",
@@ -61,7 +60,6 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         addComponents()
-        observeCurrentLocation()
         observeShouldAddNewPin()
     }
     
@@ -76,24 +74,10 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
         viewModel.getSavedPins()
     }
     
-    private func observeCurrentLocation() {
-        viewModel.$currentLocation.sink { [weak self] location in
-            guard let strongSelf = self, let location = location else {return}
-            let region = MKCoordinateRegion(
-                center: location.coordinate,
-                latitudinalMeters: 500,
-                longitudinalMeters: 500
-            )
-            strongSelf.mainMap.setRegion(region, animated: true)
-        }.store(in: &anyCancellable)
-    }
     
     private func observeShouldAddNewPin() {
-        viewModel.$newPinLocation.sink { [weak self] location in
-            guard let strongSelf = self, let location = location else {return}
-            let locationModel = CustomLocationModel(address: location.address, location: location.location)
-            let annotation = CustomAnnotation(model: locationModel)
-                   
+        viewModel.$newPinLocation.sink { [weak self] annotation in
+            guard let strongSelf = self, let annotation = annotation else {return}
             strongSelf.mainMap.addAnnotation(annotation)
         }.store(in: &anyCancellable)
     }
@@ -126,28 +110,25 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
         if annotation is MKUserLocation {
             return nil
         }
-        
         let identifier = "CustomPin"
         var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
-        
         if annotationView == nil {
             annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            annotationView?.canShowCallout = false
-            annotationView?.markerTintColor = .systemBlue
         } else {
             annotationView?.annotation = annotation
         }
-        
+        annotationView?.canShowCallout = false
+        annotationView?.markerTintColor = .systemBlue
         return annotationView
     }
     
     func mapView(_ mapView: MKMapView, didSelect annotationView: MKAnnotationView) {
         guard let customAnnotation = annotationView.annotation as? CustomAnnotation else { return }
         
-        if let selected = selectedAnnotation {
+        if let selected = viewModel.selectedAnnotation {
             if selected === customAnnotation {
                 selected.title = nil
-                selectedAnnotation = nil
+                viewModel.selectedAnnotation = nil
                 mapView.deselectAnnotation(customAnnotation, animated: true)
                 return
             } else {
@@ -155,7 +136,7 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
             }
         }
         customAnnotation.title = customAnnotation.locationModel.address
-        selectedAnnotation = customAnnotation
+        viewModel.selectedAnnotation = customAnnotation
     }
     
     @objc

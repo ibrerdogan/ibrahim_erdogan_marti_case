@@ -18,7 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        ) -> Bool {
 
            window = UIWindow(frame: UIScreen.main.bounds)
-           let locationManager = LocationManager()
+           let geocoderManager = GeocoderManager()
+           let locationManager = LocationManager(geocoderManager: geocoderManager, distance: 100)
            let userDefaultManager = UserDefaultsManager()
            let viewModel = MainMapViewModel(locationManager: locationManager,userDefaultManager: userDefaultManager)
            let rootViewController = MainMapViewController(viewModel: viewModel)

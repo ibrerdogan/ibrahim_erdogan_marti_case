@@ -28,7 +28,7 @@ final class MainMapViewModel {
     }
     
     func observeShouldAddNewPin() {
-        locationManager.shouldAddPin = {[weak self] pinLocation in
+        locationManager.addNewLocationToMap = {[weak self] pinLocation in
             guard let strongSelf = self else {return}
             strongSelf.newPinLocation = pinLocation
             strongSelf.userDefaultManager.add(pinLocation)

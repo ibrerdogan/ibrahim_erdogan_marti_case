@@ -10,7 +10,7 @@ import CoreLocation
 final class MainMapViewModel {
     @Published var currentLocation: CLLocation?
     @Published var currentAuthStatus: CLAuthorizationStatus?
-    @Published var newPinLocation: CLLocation?
+    @Published var newPinLocation: CustomLocationModel?
     private var locationManager: LocationManager
     
     init(locationManager: LocationManager) {

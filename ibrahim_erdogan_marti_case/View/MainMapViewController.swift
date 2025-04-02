@@ -13,29 +13,29 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     private var anyCancellable = Set<AnyCancellable>()
     private var selectedAnnotation: CustomAnnotation?
     
-    private lazy var startButton: UIButton = {
-       let button = UIButton()
+    private lazy var startButton: CustomButton = {
+       let button = CustomButton(title: "Start Tracking",
+                                 icon: UIImage(systemName: "play.fill"),
+                                 backgroundColor: .systemBlue)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Start Tracking", for: .normal)
-        button.backgroundColor = .blue
         button.addTarget(self, action: #selector(startTracking), for: .touchUpInside)
         return button
     }()
     
     private lazy var stopButton: UIButton = {
-       let button = UIButton()
+        let button = CustomButton(title: "Stop Tracking",
+                                  icon: UIImage(systemName: "stop.fill"),
+                                  backgroundColor: .systemBlue)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Stop Tracking", for: .normal)
-        button.backgroundColor = .blue
         button.addTarget(self, action: #selector(stopTracking), for: .touchUpInside)
         return button
     }()
     
     private lazy var deleteButton: UIButton = {
-       let button = UIButton()
+        let button = CustomButton(title: "Delete",
+                                  icon: UIImage(systemName: "trash.fill"),
+                                  backgroundColor: .systemBlue)
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("Delete", for: .normal)
-        button.backgroundColor = .blue
         button.addTarget(self, action: #selector(deleteAllPins), for: .touchUpInside)
         return button
     }()
@@ -112,13 +112,13 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
             mainMap.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             startButton.leadingAnchor.constraint(equalTo: mainMap.leadingAnchor, constant: 20),
-            startButton.bottomAnchor.constraint(equalTo: mainMap.bottomAnchor, constant: -20),
+            startButton.bottomAnchor.constraint(equalTo: mainMap.bottomAnchor, constant: -50),
             
             stopButton.trailingAnchor.constraint(equalTo: mainMap.trailingAnchor, constant: -20),
-            stopButton.bottomAnchor.constraint(equalTo: mainMap.bottomAnchor, constant: -20),
+            stopButton.bottomAnchor.constraint(equalTo: mainMap.bottomAnchor, constant: -50),
             
-            deleteButton.topAnchor.constraint(equalTo: startButton.topAnchor, constant: 0),
-            deleteButton.trailingAnchor.constraint(equalTo: stopButton.leadingAnchor)
+            deleteButton.topAnchor.constraint(equalTo: mainMap.topAnchor, constant: 50),
+            deleteButton.trailingAnchor.constraint(equalTo: stopButton.trailingAnchor)
         ])
     }
     

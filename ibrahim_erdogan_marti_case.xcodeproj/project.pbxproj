@@ -17,6 +17,7 @@
 		7F9D22762D9C759B00784095 /* GeocoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22752D9C759B00784095 /* GeocoderManager.swift */; };
 		7F9D22782D9C775B00784095 /* CustomLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22772D9C775B00784095 /* CustomLocationModel.swift */; };
 		7F9D30D32D9D896200A22B05 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D30D22D9D896200A22B05 /* UserDefaultManager.swift */; };
+		7F9D30D62D9DB7CB00A22B05 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D30D52D9DB7CB00A22B05 /* CustomButton.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		7F9D22752D9C759B00784095 /* GeocoderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoderManager.swift; sourceTree = "<group>"; };
 		7F9D22772D9C775B00784095 /* CustomLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationModel.swift; sourceTree = "<group>"; };
 		7F9D30D22D9D896200A22B05 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
+		7F9D30D52D9DB7CB00A22B05 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,6 +81,7 @@
 		7F9D22642D9B120700784095 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				7F9D30D42D9DB7B600A22B05 /* CutomButtonView */,
 				7F9D22512D9B0A1D00784095 /* ViewController.swift */,
 				7F9D22732D9B1BCF00784095 /* MainMapViewController.swift */,
 			);
@@ -117,6 +120,14 @@
 				7F9D30D22D9D896200A22B05 /* UserDefaultManager.swift */,
 			);
 			path = Managers;
+			sourceTree = "<group>";
+		};
+		7F9D30D42D9DB7B600A22B05 /* CutomButtonView */ = {
+			isa = PBXGroup;
+			children = (
+				7F9D30D52D9DB7CB00A22B05 /* CustomButton.swift */,
+			);
+			path = CutomButtonView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -192,6 +203,7 @@
 				7F9D22782D9C775B00784095 /* CustomLocationModel.swift in Sources */,
 				7F9D226A2D9B15B900784095 /* LocationManager.swift in Sources */,
 				7F9D22522D9B0A1D00784095 /* ViewController.swift in Sources */,
+				7F9D30D62D9DB7CB00A22B05 /* CustomButton.swift in Sources */,
 				7F9D22582D9B0A1D00784095 /* ibrahim_erdogan_marti_case.xcdatamodeld in Sources */,
 				7F9D224E2D9B0A1D00784095 /* AppDelegate.swift in Sources */,
 				7F9D30D32D9D896200A22B05 /* UserDefaultManager.swift in Sources */,

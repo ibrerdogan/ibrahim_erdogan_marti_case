@@ -15,6 +15,7 @@
 		7F9D22722D9B1B5F00784095 /* MainMapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22712D9B1B5F00784095 /* MainMapViewModel.swift */; };
 		7F9D22742D9B1BCF00784095 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22732D9B1BCF00784095 /* MainMapViewController.swift */; };
 		7F9D22762D9C759B00784095 /* GeocoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22752D9C759B00784095 /* GeocoderManager.swift */; };
+		7F9D22782D9C775B00784095 /* CustomLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22772D9C775B00784095 /* CustomLocationModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		7F9D22712D9B1B5F00784095 /* MainMapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = MainMapViewModel.swift; path = ibrahim_erdogan_marti_case/View/MainMapViewModel.swift; sourceTree = SOURCE_ROOT; };
 		7F9D22732D9B1BCF00784095 /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
 		7F9D22752D9C759B00784095 /* GeocoderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoderManager.swift; sourceTree = "<group>"; };
+		7F9D22772D9C775B00784095 /* CustomLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -92,6 +94,7 @@
 		7F9D22662D9B121A00784095 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				7F9D22772D9C775B00784095 /* CustomLocationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -183,6 +186,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7F9D22742D9B1BCF00784095 /* MainMapViewController.swift in Sources */,
+				7F9D22782D9C775B00784095 /* CustomLocationModel.swift in Sources */,
 				7F9D226A2D9B15B900784095 /* LocationManager.swift in Sources */,
 				7F9D22522D9B0A1D00784095 /* ViewController.swift in Sources */,
 				7F9D22582D9B0A1D00784095 /* ibrahim_erdogan_marti_case.xcdatamodeld in Sources */,

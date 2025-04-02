@@ -11,7 +11,7 @@ import Combine
 final class MainMapViewController: UIViewController,MKMapViewDelegate {
     var viewModel: MainMapViewModel
     private var anyCancellable = Set<AnyCancellable>()
-    
+    private var selectedAnnotation: CustomAnnotation?
     private lazy var mainMap: MKMapView = {
        let mapView = MKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -63,8 +63,9 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     private func observeShouldAddNewPin() {
         viewModel.$newPinLocation.sink { [weak self] location in
             guard let strongSelf = self, let location = location else {return}
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = location.coordinate
+            let locationModel = CustomLocationModel(address: location.address, location: location.location)
+            let annotation = CustomAnnotation(model: locationModel)
+                   
             strongSelf.mainMap.addAnnotation(annotation)
         }.store(in: &anyCancellable)
     }
@@ -101,12 +102,19 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     }
     
     func mapView(_ mapView: MKMapView, didSelect annotationView: MKAnnotationView) {
-        if let annotation = annotationView.annotation as? MKPointAnnotation {
-            if annotation.subtitle == nil {
-                annotation.subtitle = "Başlık"
+        guard let customAnnotation = annotationView.annotation as? CustomAnnotation else { return }
+        
+        if let selected = selectedAnnotation {
+            if selected === customAnnotation {
+                selected.title = nil
+                selectedAnnotation = nil
+                mapView.deselectAnnotation(customAnnotation, animated: true)
+                return
             } else {
-                annotation.subtitle = nil
+                selected.title = nil
             }
         }
+        customAnnotation.title = customAnnotation.locationModel.address
+        selectedAnnotation = customAnnotation
     }
 }

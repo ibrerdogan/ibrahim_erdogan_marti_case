@@ -54,5 +54,9 @@ final class MainMapViewModel {
     func stopTracking() {
         locationManager.stopTracking()
     }
+    
+    func deleteAllPins() {
+        userDefaultManager.removeAll()
+    }
 
 }

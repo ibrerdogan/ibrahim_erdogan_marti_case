@@ -36,6 +36,7 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Delete", for: .normal)
         button.backgroundColor = .blue
+        button.addTarget(self, action: #selector(deleteAllPins), for: .touchUpInside)
         return button
     }()
     
@@ -116,8 +117,8 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
             stopButton.trailingAnchor.constraint(equalTo: mainMap.trailingAnchor, constant: -20),
             stopButton.bottomAnchor.constraint(equalTo: mainMap.bottomAnchor, constant: -20),
             
-            deleteButton.topAnchor.constraint(equalTo: mainMap.topAnchor, constant: 20),
-            deleteButton.trailingAnchor.constraint(equalTo: stopButton.trailingAnchor)
+            deleteButton.topAnchor.constraint(equalTo: startButton.topAnchor, constant: 0),
+            deleteButton.trailingAnchor.constraint(equalTo: stopButton.leadingAnchor)
         ])
     }
     
@@ -165,6 +166,12 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     @objc
     func stopTracking() {
         viewModel.stopTracking()
+    }
+    
+    @objc
+    func deleteAllPins() {
+        viewModel.deleteAllPins()
+        mainMap.removeAnnotations(mainMap.annotations)
     }
     
     

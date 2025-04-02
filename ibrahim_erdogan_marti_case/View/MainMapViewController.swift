@@ -12,6 +12,34 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     var viewModel: MainMapViewModel
     private var anyCancellable = Set<AnyCancellable>()
     private var selectedAnnotation: CustomAnnotation?
+    
+    private lazy var startButton: UIButton = {
+       let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Start Tracking", for: .normal)
+        button.backgroundColor = .blue
+        button.addTarget(self, action: #selector(startTracking), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var stopButton: UIButton = {
+       let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Stop Tracking", for: .normal)
+        button.backgroundColor = .blue
+        button.addTarget(self, action: #selector(stopTracking), for: .touchUpInside)
+        return button
+    }()
+    
+    private lazy var deleteButton: UIButton = {
+       let button = UIButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("Delete", for: .normal)
+        button.backgroundColor = .blue
+        button.addTarget(self, action: #selector(deleteAllPins), for: .touchUpInside)
+        return button
+    }()
+    
     private lazy var mainMap: MKMapView = {
        let mapView = MKMapView()
         mapView.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +63,6 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
         addComponents()
         observeCurrentLocation()
         observeShouldAddNewPin()
-        viewModel.startTracking()
     }
     
     override func viewWillLayoutSubviews() {
@@ -46,6 +73,7 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         viewModel.requestAuthorization()
+        viewModel.getSavedPins()
     }
     
     private func observeCurrentLocation() {
@@ -70,6 +98,9 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
         }.store(in: &anyCancellable)
     }
     private func addComponents() {
+        mainMap.addSubview(startButton)
+        mainMap.addSubview(stopButton)
+        mainMap.addSubview(deleteButton)
         view.addSubview(mainMap)
     }
     
@@ -78,7 +109,16 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
             mainMap.topAnchor.constraint(equalTo: view.topAnchor),
             mainMap.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             mainMap.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            mainMap.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            mainMap.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            
+            startButton.leadingAnchor.constraint(equalTo: mainMap.leadingAnchor, constant: 20),
+            startButton.bottomAnchor.constraint(equalTo: mainMap.bottomAnchor, constant: -20),
+            
+            stopButton.trailingAnchor.constraint(equalTo: mainMap.trailingAnchor, constant: -20),
+            stopButton.bottomAnchor.constraint(equalTo: mainMap.bottomAnchor, constant: -20),
+            
+            deleteButton.topAnchor.constraint(equalTo: startButton.topAnchor, constant: 0),
+            deleteButton.trailingAnchor.constraint(equalTo: stopButton.leadingAnchor)
         ])
     }
     
@@ -117,4 +157,22 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
         customAnnotation.title = customAnnotation.locationModel.address
         selectedAnnotation = customAnnotation
     }
+    
+    @objc
+    func startTracking() {
+        viewModel.startTracking()
+    }
+    
+    @objc
+    func stopTracking() {
+        viewModel.stopTracking()
+    }
+    
+    @objc
+    func deleteAllPins() {
+        viewModel.deleteAllPins()
+        mainMap.removeAnnotations(mainMap.annotations)
+    }
+    
+    
 }

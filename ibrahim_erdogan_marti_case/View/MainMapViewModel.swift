@@ -12,9 +12,10 @@ final class MainMapViewModel {
     @Published var currentAuthStatus: CLAuthorizationStatus?
     @Published var newPinLocation: CustomLocationModel?
     private var locationManager: LocationManager
-    
-    init(locationManager: LocationManager) {
+    private var userDefaultManager: UserDefaultsManager
+    init(locationManager: LocationManager, userDefaultManager: UserDefaultsManager) {
         self.locationManager = locationManager
+        self.userDefaultManager = userDefaultManager
         observeAuthStatus()
         observeShouldAddNewPin()
     }
@@ -30,6 +31,15 @@ final class MainMapViewModel {
         locationManager.shouldAddPin = {[weak self] pinLocation in
             guard let strongSelf = self else {return}
             strongSelf.newPinLocation = pinLocation
+            strongSelf.userDefaultManager.add(pinLocation)
+        }
+    }
+    
+    func getSavedPins() {
+        let pins = userDefaultManager.fetchAll()
+        pins.forEach { [weak self] pinLocation in
+            guard let strongSelf = self else {return}
+            strongSelf.newPinLocation = pinLocation
         }
     }
     
@@ -39,6 +49,14 @@ final class MainMapViewModel {
     
     func startTracking() {
         locationManager.startTracking()
+    }
+    
+    func stopTracking() {
+        locationManager.stopTracking()
+    }
+    
+    func deleteAllPins() {
+        userDefaultManager.removeAll()
     }
 
 }

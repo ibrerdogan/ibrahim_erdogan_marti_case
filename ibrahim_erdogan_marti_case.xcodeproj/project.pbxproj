@@ -16,6 +16,7 @@
 		7F9D22742D9B1BCF00784095 /* MainMapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22732D9B1BCF00784095 /* MainMapViewController.swift */; };
 		7F9D22762D9C759B00784095 /* GeocoderManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22752D9C759B00784095 /* GeocoderManager.swift */; };
 		7F9D22782D9C775B00784095 /* CustomLocationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D22772D9C775B00784095 /* CustomLocationModel.swift */; };
+		7F9D30D32D9D896200A22B05 /* UserDefaultManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F9D30D22D9D896200A22B05 /* UserDefaultManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -30,6 +31,7 @@
 		7F9D22732D9B1BCF00784095 /* MainMapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMapViewController.swift; sourceTree = "<group>"; };
 		7F9D22752D9C759B00784095 /* GeocoderManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeocoderManager.swift; sourceTree = "<group>"; };
 		7F9D22772D9C775B00784095 /* CustomLocationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomLocationModel.swift; sourceTree = "<group>"; };
+		7F9D30D22D9D896200A22B05 /* UserDefaultManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +114,7 @@
 			children = (
 				7F9D22692D9B15B900784095 /* LocationManager.swift */,
 				7F9D22752D9C759B00784095 /* GeocoderManager.swift */,
+				7F9D30D22D9D896200A22B05 /* UserDefaultManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -191,6 +194,7 @@
 				7F9D22522D9B0A1D00784095 /* ViewController.swift in Sources */,
 				7F9D22582D9B0A1D00784095 /* ibrahim_erdogan_marti_case.xcdatamodeld in Sources */,
 				7F9D224E2D9B0A1D00784095 /* AppDelegate.swift in Sources */,
+				7F9D30D32D9D896200A22B05 /* UserDefaultManager.swift in Sources */,
 				7F9D22762D9C759B00784095 /* GeocoderManager.swift in Sources */,
 				7F9D22722D9B1B5F00784095 /* MainMapViewModel.swift in Sources */,
 			);
@@ -409,6 +413,7 @@
 			path = ibrahim_erdogan_marti_case.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
+			wrapsLines = 1;
 		};
 /* End XCVersionGroup section */
 	};

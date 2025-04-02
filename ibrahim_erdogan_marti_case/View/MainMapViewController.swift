@@ -112,21 +112,18 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     
     func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
-                return nil
-            }
-
-            let identifier = "CustomPin"
-            var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
-            if annotationView == nil {
-                annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-            } else {
-                annotationView?.annotation = annotation
-            }
-
-            annotationView?.canShowCallout = false
-            annotationView?.markerTintColor = .systemBlue
-
-            return annotationView
+            return nil
+        }
+        let identifier = "CustomPin"
+        var annotationView = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
+        if annotationView == nil {
+            annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        } else {
+            annotationView?.annotation = annotation
+        }
+        annotationView?.canShowCallout = false
+        annotationView?.markerTintColor = .systemBlue
+        return annotationView
     }
     
     func mapView(_ mapView: MKMapView, didSelect annotationView: MKAnnotationView) {

@@ -76,11 +76,8 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     
     
     private func observeShouldAddNewPin() {
-        viewModel.$newPinLocation.sink { [weak self] location in
-            guard let strongSelf = self, let location = location else {return}
-            let locationModel = CustomLocationModel(address: location.address, location: location.location)
-            let annotation = CustomAnnotation(model: locationModel)
-                   
+        viewModel.$newPinLocation.sink { [weak self] annotation in
+            guard let strongSelf = self, let annotation = annotation else {return}
             strongSelf.mainMap.addAnnotation(annotation)
         }.store(in: &anyCancellable)
     }

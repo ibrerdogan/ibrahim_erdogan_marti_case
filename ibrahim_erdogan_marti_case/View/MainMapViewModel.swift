@@ -9,7 +9,7 @@ import Foundation
 import CoreLocation
 final class MainMapViewModel {
     @Published var currentAuthStatus: CLAuthorizationStatus?
-    @Published var newPinLocation: CustomLocationModel?
+    @Published var newPinLocation: CustomAnnotation?
     private var locationManager: LocationManager
     private var userDefaultManager: UserDefaultsManager
     var selectedAnnotation: CustomAnnotation?
@@ -30,7 +30,9 @@ final class MainMapViewModel {
     func observeShouldAddNewPin() {
         locationManager.addNewLocationToMap = {[weak self] pinLocation in
             guard let strongSelf = self else {return}
-            strongSelf.newPinLocation = pinLocation
+            let locationModel = CustomLocationModel(address: pinLocation.address, location: pinLocation.location)
+            let annotation = CustomAnnotation(model: locationModel)
+            strongSelf.newPinLocation = annotation
             strongSelf.userDefaultManager.add(pinLocation)
         }
     }
@@ -39,7 +41,9 @@ final class MainMapViewModel {
         let pins = userDefaultManager.fetchAll()
         pins.forEach { [weak self] pinLocation in
             guard let strongSelf = self else {return}
-            strongSelf.newPinLocation = pinLocation
+            let locationModel = CustomLocationModel(address: pinLocation.address, location: pinLocation.location)
+            let annotation = CustomAnnotation(model: locationModel)
+            strongSelf.newPinLocation = annotation
         }
     }
     

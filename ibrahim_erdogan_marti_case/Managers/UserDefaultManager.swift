@@ -7,8 +7,13 @@
 
 import Foundation
 import CoreLocation
-
-class UserDefaultsManager {
+protocol UserDefaultsManagerProtocol {
+    func save(_ models: [CustomLocationModel])
+    func fetchAll() -> [CustomLocationModel]
+    func add(_ model: CustomLocationModel)
+    func removeAll()
+}
+class UserDefaultsManager: UserDefaultsManagerProtocol {
     private let key = "customModels"
 
 

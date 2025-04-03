@@ -6,7 +6,11 @@
 //
 
 import CoreLocation
-final class GeocoderManager {
+protocol GeocoderManagerProtocol {
+    func getAddressForLocation(_ location: CLLocation,completion: @escaping (String?) -> Void)
+}
+
+final class GeocoderManager: GeocoderManagerProtocol {
     private let geocoder = CLGeocoder()
     func getAddressForLocation(_ location: CLLocation,completion: @escaping (String?) -> Void) {
         geocoder.reverseGeocodeLocation(location) { placemarks, error in

@@ -7,19 +7,30 @@
 
 import Foundation
 import CoreLocation
-
-final class LocationManager: NSObject, CLLocationManagerDelegate {
+protocol LocationManagerProtocol {
+    var didUpdateLocationAuthStatus: ((CLAuthorizationStatus) -> Void)? { get set }
+    var addNewLocationToMap: ((CustomLocationModel) -> Void)? { get set }
+    var didUpdateLocation : ((Result<CLLocation,Error>) -> Void)? { get set }
+    var geocoderManager: GeocoderManagerProtocol {get set}
+    var distance: Double {get set}
     
-    var didUpdateLocation : (Result<CLLocation,Error>) -> () = { _ in}
-    var didupdateLocationAuthStatus: (CLAuthorizationStatus) -> () = { _ in}
-    var addNewLocationToMap: (CustomLocationModel) -> () = { _ in}
+    func requestAuthorization()
+    func startTracking()
+    func stopTracking()
+}
+
+final class LocationManager: NSObject, CLLocationManagerDelegate, LocationManagerProtocol {
+    
+    var didUpdateLocationAuthStatus: ((CLAuthorizationStatus) -> Void)?
+    var addNewLocationToMap: ((CustomLocationModel) -> Void)?
+    var didUpdateLocation : ((Result<CLLocation,Error>) -> Void)?
+    var geocoderManager: GeocoderManagerProtocol
+    var distance: Double
     
     private let locationManager = CLLocationManager()
     private var lastPinLocation: CLLocation?
-    private var geocoderManager: GeocoderManager
-    private var distance: Double
     
-    init(geocoderManager: GeocoderManager, distance: Double) {
+    init(geocoderManager: GeocoderManagerProtocol, distance: Double) {
         self.distance = distance
         self.geocoderManager = geocoderManager
         super.init()
@@ -47,16 +58,16 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
 
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
-        didUpdateLocation(Result.success(location))
+        didUpdateLocation?(Result.success(location))
         handleNewPin(location)
     }
     
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
-        didUpdateLocation(Result.failure(error))
+        didUpdateLocation?(Result.failure(error))
     }
     
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        didupdateLocationAuthStatus(manager.authorizationStatus)
+        didUpdateLocationAuthStatus?(manager.authorizationStatus)
     }
     
     private func handleNewPin(_ location: CLLocation) {
@@ -75,7 +86,7 @@ final class LocationManager: NSObject, CLLocationManagerDelegate {
         geocoderManager.getAddressForLocation(location) { [weak self] address in
             guard let self = self, let address = address else { return }
             let locationModel = CustomLocationModel(address: address, location: location)
-            self.addNewLocationToMap(locationModel)
+            self.addNewLocationToMap?(locationModel)
             self.lastPinLocation = location
         }
     }

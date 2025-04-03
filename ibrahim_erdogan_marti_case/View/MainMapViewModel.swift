@@ -30,9 +30,7 @@ final class MainMapViewModel {
     func observeShouldAddNewPin() {
         locationManager.addNewLocationToMap = {[weak self] pinLocation in
             guard let strongSelf = self else {return}
-            let locationModel = CustomLocationModel(address: pinLocation.address, location: pinLocation.location)
-            let annotation = CustomAnnotation(model: locationModel)
-            strongSelf.newPinLocation = annotation
+            strongSelf.newPinLocation = strongSelf.createCustomAnnotation(pinLocation: pinLocation)
             strongSelf.userDefaultManager.add(pinLocation)
         }
     }
@@ -41,10 +39,14 @@ final class MainMapViewModel {
         let pins = userDefaultManager.fetchAll()
         pins.forEach { [weak self] pinLocation in
             guard let strongSelf = self else {return}
-            let locationModel = CustomLocationModel(address: pinLocation.address, location: pinLocation.location)
-            let annotation = CustomAnnotation(model: locationModel)
-            strongSelf.newPinLocation = annotation
+            strongSelf.newPinLocation = strongSelf.createCustomAnnotation(pinLocation: pinLocation)
         }
+    }
+    
+    private func createCustomAnnotation(pinLocation: CustomLocationModel) -> CustomAnnotation{
+        let locationModel = CustomLocationModel(address: pinLocation.address, location: pinLocation.location)
+        let annotation = CustomAnnotation(model: locationModel)
+        return annotation
     }
     
     func requestAuthorization(){

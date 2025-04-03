@@ -7,13 +7,37 @@
 
 import Foundation
 import CoreLocation
-final class MainMapViewModel {
-    @Published var currentAuthStatus: CLAuthorizationStatus?
-    @Published var newPinLocation: CustomAnnotation?
-    private var locationManager: LocationManager
-    private var userDefaultManager: UserDefaultsManager
+
+protocol MainMapViewModelDelegate: AnyObject {
+    func didUpdateNewPin(_ annotation: CustomAnnotation?)
+}
+
+protocol MainMapViewModelProtocol: AnyObject {
+    var delegate: MainMapViewModelDelegate? { get set }
+    var selectedAnnotation: CustomAnnotation? {get set}
+    func observeAuthStatus()
+    func observeShouldAddNewPin()
+    func getSavedPins()
+    func requestAuthorization()
+    func startTracking()
+    func stopTracking()
+    func deleteAllPins()
+}
+
+final class MainMapViewModel: MainMapViewModelProtocol {
+    var delegate: MainMapViewModelDelegate?
+    private var currentAuthStatus: CLAuthorizationStatus?
+    private(set) var newPinLocation: CustomAnnotation? {
+        didSet {
+            delegate?.didUpdateNewPin(newPinLocation)
+        }
+    }
+    private var locationManager: LocationManagerProtocol
+    private var userDefaultManager: UserDefaultsManagerProtocol
+    
     var selectedAnnotation: CustomAnnotation?
-    init(locationManager: LocationManager, userDefaultManager: UserDefaultsManager) {
+    
+    init(locationManager: LocationManagerProtocol, userDefaultManager: UserDefaultsManagerProtocol) {
         self.locationManager = locationManager
         self.userDefaultManager = userDefaultManager
         observeAuthStatus()
@@ -21,7 +45,7 @@ final class MainMapViewModel {
     }
     
     func observeAuthStatus() {
-        locationManager.didupdateLocationAuthStatus = { [weak self] status in
+        locationManager.didUpdateLocationAuthStatus = { [weak self] status in
             guard let strongSelf = self else {return}
             strongSelf.currentAuthStatus = status
         }

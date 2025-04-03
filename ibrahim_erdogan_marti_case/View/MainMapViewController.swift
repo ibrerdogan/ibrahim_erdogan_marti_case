@@ -9,7 +9,7 @@ import UIKit
 import MapKit
 import Combine
 final class MainMapViewController: UIViewController,MKMapViewDelegate {
-    var viewModel: MainMapViewModel
+    var viewModel: MainMapViewModelProtocol
     private var anyCancellable = Set<AnyCancellable>()
     
     private lazy var startButton: CustomButton = {
@@ -47,7 +47,7 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
         return mapView
     }()
     
-    init(viewModel: MainMapViewModel) {
+    init(viewModel: MainMapViewModelProtocol) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
         mainMap.delegate = self
@@ -64,7 +64,7 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         addComponents()
-        observeShouldAddNewPin()
+        viewModel.delegate = self
     }
     
     override func viewWillLayoutSubviews() {
@@ -78,13 +78,6 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
         viewModel.getSavedPins()
     }
     
-    
-    private func observeShouldAddNewPin() {
-        viewModel.$newPinLocation.sink { [weak self] annotation in
-            guard let strongSelf = self, let annotation = annotation else {return}
-            strongSelf.mainMap.addAnnotation(annotation)
-        }.store(in: &anyCancellable)
-    }
     private func addComponents() {
         mainMap.addSubview(startButton)
         mainMap.addSubview(stopButton)
@@ -157,6 +150,19 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
     func deleteAllPins() {
         viewModel.deleteAllPins()
         mainMap.removeAnnotations(mainMap.annotations)
+    }
+    
+    
+}
+
+extension MainMapViewController: MainMapViewModelDelegate {
+    func didUpdateNewPin(_ annotation: CustomAnnotation?) {
+        guard let annotation = annotation else {return}
+        mainMap.addAnnotation(annotation)
+    }
+    
+    func didUpdateAutstatus(_ authStatus: CLAuthorizationStatus?) {
+        
     }
     
     

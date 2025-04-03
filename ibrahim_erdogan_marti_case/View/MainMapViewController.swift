@@ -57,6 +57,10 @@ final class MainMapViewController: UIViewController,MKMapViewDelegate {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        anyCancellable.removeAll()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         addComponents()
